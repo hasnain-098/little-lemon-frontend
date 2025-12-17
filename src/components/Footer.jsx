@@ -1,8 +1,9 @@
 import footer_logo from "../assets/footer_logo.png"
+import './Footer.css'
 
 function Footer() {
     return (
-        <>
+        <div className="footer-container">
             <div>
                 <img src={footer_logo} alt="Little Lemon Logo" />
             </div>
@@ -17,7 +18,7 @@ function Footer() {
                 <p><a href="#">Facebook</a></p>
                 <p><a href="#">Instagram</a></p>
             </div>
-        </>
+        </div>
     );
 }
 

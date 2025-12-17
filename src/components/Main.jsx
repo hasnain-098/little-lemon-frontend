@@ -3,8 +3,8 @@ import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import BookingForm from "./BookingForm";
 import ConfirmedBooking from "./ConfirmedBooking";
 import dish_1 from "../assets/dish_1.jpg";
-import dish_2 from "../assets/dish_2.jpg";
 import dish_3 from "../assets/dish_3.jpg";
+import './Main.css'
 
 const Main = () => {
 
@@ -67,7 +67,6 @@ const Main = () => {
                     </div>
                     <div>
                         <img src={dish_1} alt="dish 1" />
-                        <img src={dish_2} alt="dish 2" />
                         <img src={dish_3} alt="dish 3" />
                     </div>
                 </section>

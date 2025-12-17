@@ -1,19 +1,15 @@
-function Nav() {
+import { Link } from 'react-router-dom';
+
+const Nav = () => {
     return (
-        <ul>
-            <li>
-                <a href="#">Home</a>
-            </li>
-            <li>
-                <a href="#">About</a>
-            </li>
-            <li>
-                <a href="#">Menu</a>
-            </li>
-            <li>
-                <a href="#">Login</a>
-            </li>
-        </ul>
+        <nav>
+            <ul style={{ listStyle: "none" }}>
+                <li><Link to="/">Home</Link></li>
+                <li><Link to="/about">About</Link></li>
+                <li><Link to="/menu">Menu</Link></li>
+                <li><Link to="/login">Login</Link></li>
+            </ul>
+        </nav>
     );
 }
 

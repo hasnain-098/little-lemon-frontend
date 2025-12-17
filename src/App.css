@@ -1,0 +1,15 @@
+header, main, footer {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+button {
+  background-color: #f4ce14;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #e0b800;
+}

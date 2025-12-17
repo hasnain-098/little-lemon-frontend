@@ -1,6 +1,6 @@
 import { useReducer } from "react";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
-import BookingPage from "./BookingPage";
+import BookingForm from "./BookingForm";
 import ConfirmedBooking from "./ConfirmedBooking";
 import dish_1 from "../assets/dish_1.jpg";
 import dish_2 from "../assets/dish_2.jpg";
@@ -9,22 +9,22 @@ import dish_3 from "../assets/dish_3.jpg";
 const Main = () => {
 
     const seededRandom = (seed) => {
-        var m = 2 ** 35 - 31;
-        var a = 185852;
-        var s = seed % m;
+        let m = 2 ** 35 - 31;
+        let a = 185852;
+        let s = seed % m;
         return function () {
-            return (s = s * a % m) / m;
+            s = (s * a) % m;
+            return s / m;
         };
-    }
+    };
 
     const fetchAPI = (date) => {
         let result = [];
         let random = seededRandom(date.getDate());
 
         for (let i = 17; i <= 23; i++) {
-            if (random() < 0.5) {
-                result.push(i + ':00');
-            }
+            result.push(i + ':00');
+            
             if (random() < 0.5) {
                 result.push(i + ':30');
             }
@@ -73,7 +73,7 @@ const Main = () => {
                 </section>
             } />
             <Route path="/booking" element={
-                <BookingPage availableTimes={state} dispatch={dispatch} submitForm={submitForm} />
+                <BookingForm availableTimes={state} dispatch={dispatch} submitForm={submitForm} />
             }
             />
             <Route path="/confirmed" element={<ConfirmedBooking />} />

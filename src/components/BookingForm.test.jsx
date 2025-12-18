@@ -4,51 +4,74 @@ import "@testing-library/jest-dom";
 import BookingForm from "./BookingForm";
 
 describe("BookingForm Component", () => {
-  const mockProps = {
-    availableTimes: { availableTimes: ["17:00", "18:00", "19:00"] },
-    dispatch: jest.fn(),
-    submitForm: jest.fn(),
-  };
+    const mockProps = {
+        availableTimes: { availableTimes: ["17:00", "18:00", "19:00"] },
+        dispatch: jest.fn(),
+        submitForm: jest.fn(),
+    };
 
-  test("renders all form fields and the submit button", () => {
-    render(<BookingForm {...mockProps} />);
+    test("renders all form fields and the submit button", () => {
+        render(<BookingForm {...mockProps} />);
 
-    expect(screen.getByLabelText(/select date/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/select time/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/number of guests/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/occasion/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /reserve table/i })).toBeInTheDocument();
-  });
-
-  test("shows validation errors when fields are touched and left empty", async () => {
-    render(<BookingForm {...mockProps} />);
-    
-    const dateInput = screen.getByLabelText(/select date/i);
-    
-    fireEvent.blur(dateInput);
-
-    await waitFor(() => {
-      expect(screen.getByText(/date is required!/i)).toBeInTheDocument();
+        expect(screen.getByLabelText(/select date/i)).toBeInTheDocument();
+        expect(screen.getByLabelText(/select time/i)).toBeInTheDocument();
+        expect(screen.getByLabelText(/number of guests/i)).toBeInTheDocument();
+        expect(screen.getByLabelText(/occasion/i)).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: /reserve table/i })).toBeInTheDocument();
     });
-  });
 
-  test("calls submitForm with correct values when the form is valid", async () => {
-    render(<BookingForm {...mockProps} />);
+    test("shows validation errors when fields are touched and left empty", async () => {
+        render(<BookingForm {...mockProps} />);
 
-    fireEvent.change(screen.getByLabelText(/select date/i), { target: { value: "2025-12-25" } });
-    fireEvent.change(screen.getByLabelText(/select time/i), { target: { value: "18:00" } });
-    fireEvent.change(screen.getByLabelText(/number of guests/i), { target: { value: "4" } });
-    fireEvent.change(screen.getByLabelText(/occasion/i), { target: { value: "birthday" } });
+        const dateInput = screen.getByLabelText(/select date/i);
 
-    fireEvent.click(screen.getByRole("button", { name: /reserve table/i }));
+        fireEvent.blur(dateInput);
 
-    await waitFor(() => {
-      expect(mockProps.submitForm).toHaveBeenCalledWith({
-        date: "2025-12-25",
-        time: "18:00",
-        guests: 4,
-        occasion: "birthday",
-      });
+        await waitFor(() => {
+            expect(screen.getByText(/date is required!/i)).toBeInTheDocument();
+        });
     });
-  });
+
+    test("calls submitForm with correct values when the form is valid", async () => {
+        render(<BookingForm {...mockProps} />);
+
+        fireEvent.change(screen.getByLabelText(/select date/i), { target: { value: "2025-12-25" } });
+        fireEvent.change(screen.getByLabelText(/select time/i), { target: { value: "18:00" } });
+        fireEvent.change(screen.getByLabelText(/number of guests/i), { target: { value: "4" } });
+        fireEvent.change(screen.getByLabelText(/occasion/i), { target: { value: "birthday" } });
+
+        fireEvent.click(screen.getByRole("button", { name: /reserve table/i }));
+
+        await waitFor(() => {
+            expect(mockProps.submitForm).toHaveBeenCalledWith({
+                date: "2025-12-25",
+                time: "18:00",
+                guests: 4,
+                occasion: "birthday",
+            });
+        });
+    });
+
+    test("calls dispatch when the date is changed", async () => {
+        render(<BookingForm {...mockProps} />);
+        const dateInput = screen.getByLabelText(/select date/i);
+
+        fireEvent.change(dateInput, { target: { value: "2025-12-30" } });
+
+        await waitFor(() => {
+            expect(mockProps.dispatch).toHaveBeenCalledWith("2025-12-30");
+        });
+    });
+
+    test("validation attributes are present", () => {
+        render(<BookingForm {...mockProps} />);
+
+        const guestsInput = screen.getByLabelText(/number of guests/i);
+        const dateInput = screen.getByLabelText(/select date/i);
+
+        expect(dateInput).toHaveAttribute("type", "date");
+        expect(guestsInput).toHaveAttribute("type", "number");
+        expect(guestsInput).toHaveAttribute("min", "1");
+        expect(guestsInput).toHaveAttribute("max", "10");
+    });
 });

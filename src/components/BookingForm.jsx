@@ -52,7 +52,7 @@ const BookingForm = ({ availableTimes, dispatch, submitForm }) => {
                 id="date"
                 name="date"
                 type="date"
-                onChange={formik.handleChange}
+                onChange={handleDateChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.date}
             />

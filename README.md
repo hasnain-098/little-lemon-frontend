@@ -1,5 +1,6 @@
 # Little Lemon Restaurant
 This repository contains the final capstone project for the Meta Front-End Developer course on Coursera. The application is a responsive React-based web platform for the fictional "Little Lemon" restaurant, featuring a functional table reservation system.
+- **Live Demo:** https://little-lemon-reservation-app.netlify.app/
 
 ---
 # Project Overview
